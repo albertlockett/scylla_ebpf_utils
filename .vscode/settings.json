@@ -1,0 +1,3 @@
+{
+  "rust-analyzer.linkedProjects": ["Cargo.toml", "scylla-tools-01-ebpf/Cargo.toml"]
+}
