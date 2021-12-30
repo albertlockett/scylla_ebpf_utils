@@ -54,6 +54,8 @@ fn try_main() -> Result<(), anyhow::Error> {
     program.load()?;
     program.attach("do_sys_openat2", 0)?;
 
+    let mut perf_array = AsyncPerfEventArray::try_from(bpf.map_mut("EVENTS")?)?;
+
     let running = Arc::new(AtomicBool::new(true));
     let r = running.clone();
 
