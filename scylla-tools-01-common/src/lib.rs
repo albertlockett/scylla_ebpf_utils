@@ -3,7 +3,7 @@
 #[derive(Clone,Copy)]
 #[repr(C)]
 pub struct FileEvent {
-  pub pid: i64
+  pub pid: u32
 }
 
 #[cfg(feature = "user")]
