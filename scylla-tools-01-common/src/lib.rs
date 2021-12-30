@@ -2,7 +2,7 @@
 
 #[repr(C)]
 pub struct FileEvent {
-  pub filename: [u8; 400],
+  pub pid: i64
 }
 
 #[cfg(feature = "user")]
