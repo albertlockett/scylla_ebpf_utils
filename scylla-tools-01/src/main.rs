@@ -1,4 +1,8 @@
-use aya::{Bpf, include_bytes_aligned};
+use aya::{
+    maps::perf::AsyncPerfEventArray,
+    Bpf, 
+    include_bytes_aligned
+};
 use aya::programs::KProbe;
 use std::{
     convert::{TryFrom,TryInto},
