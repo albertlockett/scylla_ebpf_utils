@@ -9,6 +9,7 @@ use aya_log_ebpf::debug;
 
 #[kprobe(name="scylla_tools_01")]
 pub fn scylla_tools_01(ctx: ProbeContext) -> u32 {
+    
     match unsafe { try_scylla_tools_01(ctx) } {
         Ok(ret) => ret,
         Err(ret) => ret,
@@ -16,7 +17,7 @@ pub fn scylla_tools_01(ctx: ProbeContext) -> u32 {
 }
 
 unsafe fn try_scylla_tools_01(ctx: ProbeContext) -> Result<u32, u32> {
-    debug!(&ctx, "try scylla tools 01");
+    debug!(&ctx, "try scylla tools 01 {}", ctx);
     Ok(0)
 }
 
