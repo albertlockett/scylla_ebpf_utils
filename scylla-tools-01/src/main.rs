@@ -1,6 +1,7 @@
 use aya::{
     maps::perf::AsyncPerfEventArray,
     Bpf, 
+    util::online_cpus,
     include_bytes_aligned
 };
 use aya::programs::KProbe;
