@@ -30,11 +30,11 @@ unsafe fn try_scylla_tools_01(ctx: ProbeContext) -> Result<u32, u32> {
       (*ctx.regs).rax as *const u8,
       &mut buf//.as_mut_ptr()// as *mut c_void,
     )
-  }
+  };
 
   let numread = match numreado {
     Ok(v) => v as u32,
-    Err(_e) => -1
+    Err(_e) => 1234567
   };
 
   let pid = helpers::bpf_get_current_pid_tgid() as u32;
