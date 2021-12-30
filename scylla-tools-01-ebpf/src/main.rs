@@ -4,6 +4,7 @@
 use aya_bpf::{
   macros::kprobe,
   macros::{map},
+  maps::PerfEventArray,
   programs::ProbeContext,
 };
 use aya_log_ebpf::debug;
