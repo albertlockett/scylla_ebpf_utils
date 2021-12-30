@@ -80,7 +80,7 @@ fn try_main() -> Result<(), anyhow::Error> {
                     let ptr = buf.as_ptr() as *const FileEvent;
                     let data = unsafe { ptr.read_unaligned() };
                     let fname = std::str::from_utf8(&data.filename).unwrap();
-                    println!("LOG: CPUID {}, PID {}, fname {}", cpu_id, data.pid, fname);
+                    println!("LOG: CPUID {}, PID {}, nums {}, fname {}", cpu_id, data.pid, data.numread, fname);
                 }
             }
         });
