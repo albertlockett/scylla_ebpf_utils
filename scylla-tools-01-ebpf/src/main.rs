@@ -7,6 +7,7 @@ use aya_bpf::{
   maps::PerfEventArray,
   programs::ProbeContext
 };
+use aya_bpf::helpers;
 use aya_log_ebpf::debug;
 use scylla_tools_01_common::FileEvent;
 
@@ -31,9 +32,10 @@ unsafe fn try_scylla_tools_01(ctx: ProbeContext) -> Result<u32, u32> {
   //   );
   // }
 
+  let pid = helpers::bpf_get_current_pid_tgid() as u32;
   debug!(&ctx, "thing happened");
   let file_event = FileEvent{
-    pid: 10
+    pid: pid
   };
   EVENTS.output(&ctx, &file_event, 0);
   Ok(0)
