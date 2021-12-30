@@ -23,18 +23,19 @@ pub fn scylla_tools_01(ctx: ProbeContext) -> u32 {
 }
 
 unsafe fn try_scylla_tools_01(ctx: ProbeContext) -> Result<u32, u32> {
-  /*
-  let mut buf = [0u8; 400];
-  unsafe {
-    helpers::bpf_probe_read_user_str(
-      (*ctx.regs).rax as *const u8,
-      &mut buf//.as_mut_ptr()// as *mut c_void,
-    );
-  }
+  // let mut buf = [0u8; 400];
+  // unsafe {
+  //   helpers::bpf_probe_read_user_str(
+  //     (*ctx.regs).rax as *const u8,
+  //     &mut buf//.as_mut_ptr()// as *mut c_void,
+  //   );
+  // }
 
-  let comm = core::str::from_utf8_unchecked(&buf[..]);
-  debug!(&ctx, "try scylla tools 01 {}", comm);
-  */
+  debug!(&ctx, "thing happened");
+  let file_event = FileEvent{
+    pid: 10
+  };
+  EVENTS.output(&ctx, &file_event, 0);
   Ok(0)
 }
 
