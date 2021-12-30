@@ -9,6 +9,7 @@ aya = { git = "https://github.com/aya-rs/aya", branch="main" }
 aya-log = { git = "https://github.com/aya-rs/aya-log", branch = "main" }
 scylla-tools-01-common = { path = "../scylla-tools-01-common", features=["user"] }
 anyhow = "1.0.42"
+bytes = "1"
 ctrlc = "3.2"
 simplelog = { version = "^0.11.0", features = ["paris"] }
 
