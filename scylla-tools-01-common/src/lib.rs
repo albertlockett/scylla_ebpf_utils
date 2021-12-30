@@ -1,6 +1,6 @@
 #![no_std]
 
-#[derive(Copy)]
+#[derive(Clone,Copy)]
 #[repr(C)]
 pub struct FileEvent {
   pub pid: i64
