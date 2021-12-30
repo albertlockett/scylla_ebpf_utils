@@ -24,18 +24,19 @@ pub fn scylla_tools_01(ctx: ProbeContext) -> u32 {
 }
 
 unsafe fn try_scylla_tools_01(ctx: ProbeContext) -> Result<u32, u32> {
-  // let mut buf = [0u8; 400];
-  // unsafe {
-  //   helpers::bpf_probe_read_user_str(
-  //     (*ctx.regs).rax as *const u8,
-  //     &mut buf//.as_mut_ptr()// as *mut c_void,
-  //   );
-  // }
+  let mut buf = [0u8; 400];
+  unsafe {
+    helpers::bpf_probe_read_user_str(
+      (*ctx.regs).rax as *const u8,
+      &mut buf//.as_mut_ptr()// as *mut c_void,
+    );
+  }
 
   let pid = helpers::bpf_get_current_pid_tgid() as u32;
   debug!(&ctx, "thing happened");
   let file_event = FileEvent{
-    pid: pid
+    pid: pid,
+    filename: buf
   };
   EVENTS.output(&ctx, &file_event, 0);
   Ok(0)
