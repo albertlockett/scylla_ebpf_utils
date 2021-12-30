@@ -4,6 +4,7 @@ use aya::{
     include_bytes_aligned
 };
 use aya::programs::KProbe;
+use bytes::BytesMut;
 use std::{
     convert::{TryFrom,TryInto},
     sync::Arc,
@@ -14,6 +15,10 @@ use std::{
 use structopt::StructOpt;
 use simplelog::{ColorChoice, ConfigBuilder, LevelFilter, TermLogger, TerminalMode};
 use aya_log::BpfLogger;
+use tokio::{signal, task};
+
+use scylla_tools_01_common::FileEvent;
+
 
 #[tokio::main]
 async fn main() {
@@ -59,6 +64,25 @@ fn try_main() -> Result<(), anyhow::Error> {
     program.attach("do_sys_openat2", 0)?;
 
     let mut perf_array = AsyncPerfEventArray::try_from(bpf.map_mut("EVENTS")?)?;
+    for cpu_id in online_cpus()? {
+        let mut buf = perf_array.open(cpu_id, None)?;
+
+        task::spawn(async move {
+            let mut buffers = (0..10)
+                .map(|_| BytesMut::with_capacity(1024))
+                .collect::<Vec<_>>();
+
+            loop {
+                let events = buf.read_events(&mut buffers).await.unwrap();
+                for i in 0..events.read {
+                    let buf = &mut buffers[i];
+                    let ptr = buf.as_ptr() as *const FileEvent;
+                    let data = unsafe { ptr.read_unaligned() };
+                    println!("LOG: PID {}", data.pid);
+                }
+            }
+        });
+    }
 
     let running = Arc::new(AtomicBool::new(true));
     let r = running.clone();

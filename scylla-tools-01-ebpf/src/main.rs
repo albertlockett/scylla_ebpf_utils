@@ -6,6 +6,7 @@ use aya_bpf::{
   macros::{map},
   maps::PerfEventArray,
   programs::ProbeContext,
+  util::online_cpus,
 };
 use aya_log_ebpf::debug;
 use scylla_tools_01_common::FileEvent;
