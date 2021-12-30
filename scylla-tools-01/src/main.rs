@@ -79,6 +79,7 @@ fn try_main() -> Result<(), anyhow::Error> {
                     let buf = &mut buffers[i];
                     let ptr = buf.as_ptr() as *const FileEvent;
                     let data = unsafe { ptr.read_unaligned() };
+                    let fname = str::from_utf8(&data.filename).unwrap();
                     println!("LOG: CPUID {}, PID {}", cpu_id, data.pid);
                 }
             }

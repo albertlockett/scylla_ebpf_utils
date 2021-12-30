@@ -24,7 +24,7 @@ pub fn scylla_tools_01(ctx: ProbeContext) -> u32 {
 }
 
 unsafe fn try_scylla_tools_01(ctx: ProbeContext) -> Result<u32, u32> {
-  let mut buf = [0u8; 400];
+  let mut buf = [0u8; 64];
   unsafe {
     helpers::bpf_probe_read_user_str(
       (*ctx.regs).rax as *const u8,
