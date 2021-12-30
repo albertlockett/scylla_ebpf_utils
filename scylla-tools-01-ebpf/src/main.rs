@@ -29,8 +29,8 @@ unsafe fn try_scylla_tools_01(ctx: ProbeContext) -> Result<u32, u32> {
     helpers::bpf_probe_read_user_str(
       (*ctx.regs).rax as *const u8,
       &mut buf//.as_mut_ptr()// as *mut c_void,
-    )?
-  }
+    )? as u32
+  };
 
   let pid = helpers::bpf_get_current_pid_tgid() as u32;
   debug!(&ctx, "thing happened");
