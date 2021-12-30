@@ -6,7 +6,7 @@ use aya_bpf::{
     programs::ProbeContext,
 };
 use aya_log_ebpf::debug;
-// use aya::BpfContext;
+use aya_bpf::BpfContext;
 
 #[kprobe(name="scylla_tools_01")]
 pub fn scylla_tools_01(ctx: ProbeContext) -> u32 {
