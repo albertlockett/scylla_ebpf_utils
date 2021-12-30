@@ -8,8 +8,11 @@ use std::{
     time::Duration,
 };
 use structopt::StructOpt;
+use simplelog::{ColorChoice, ConfigBuilder, LevelFilter, TermLogger, TerminalMode};
+use aya_log::BpfLogger;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     if let Err(e) = try_main() {
         eprintln!("error: {:#}", e);
     }
@@ -34,6 +37,19 @@ fn try_main() -> Result<(), anyhow::Error> {
     let mut bpf = Bpf::load(include_bytes_aligned!(
         "../../target/bpfel-unknown-none/release/scylla-tools-01"
     ))?;
+
+    TermLogger::init(
+        LevelFilter::Debug,
+        ConfigBuilder::new()
+            .set_target_level(LevelFilter::Debug)
+            .set_location_level(LevelFilter::Debug)
+            .build(),
+        TerminalMode::Mixed,
+        ColorChoice::Auto,
+    )
+    .unwrap();
+    BpfLogger::init(&mut bpf).unwrap();
+
     let program: &mut KProbe = bpf.program_mut("scylla_tools_01").unwrap().try_into()?;
     program.load()?;
     program.attach("do_sys_openat2", 0)?;
