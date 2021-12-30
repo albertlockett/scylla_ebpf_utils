@@ -3,9 +3,11 @@
 
 use aya_bpf::{
   macros::kprobe,
+  macros::{map},
   programs::ProbeContext,
 };
 use aya_log_ebpf::debug;
+use scylla_tools_01_common::FileEvent;
 
 #[map(name = "EVENTS")]
 static mut EVENTS: PerfEventArray<FileEvent> = PerfEventArray::<FileEvent>::with_max_entries(1024, 0);
